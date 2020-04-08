@@ -5,7 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Ump.fs" />
+    <Compile Include="DecrementCounter.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ump\Ump.fsproj" />
   </ItemGroup>
 
   <ItemGroup>

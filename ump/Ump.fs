@@ -1,13 +1,22 @@
-﻿module Ump
+﻿namespace Ump
 
-type Ump<'initArg, 'resumeArg, 'Model, 'Effect, 'Msg, 'Output> =
+type Ump<'initArg, 'Model, 'Effect, 'Msg, 'Output> =
     {
         Init : 'initArg -> 'Model * 'Effect list
         Update : 'Msg -> 'Model -> 'Model * 'Effect list
         Perform : 'Effect -> Async<'Msg>
         Output : 'Model -> 'Output
-        ResumeMsg : ('resumeArg -> 'Msg) option
     }
+
+
+module Result =
+
+    let bindUpdate updatef msg result =
+        match result with
+        | Ok model ->
+            updatef msg model
+        | Error err ->
+            Error err, []
 
 
 module Ump =
@@ -60,7 +69,7 @@ module Ump =
     /// The returned Model is the final state of the Model when the program exited.
     /// Infinite loops are possible when Update generates Effects on every iteration.
     /// This allows the program to support interactive applications, for example.
-    let run (program: Ump<'initArg, 'resumeArg, 'Model, 'Effect, 'Msg, 'Output>) (initArg: 'initArg) =
+    let run (program: Ump<'initArg, 'Model, 'Effect, 'Msg, 'Output>) (initArg: 'initArg) =
         let (model, effects) = program.Init initArg
         let state =
             {
@@ -71,30 +80,16 @@ module Ump =
         runLoop program state
 
 
-    /// Resumes a program from a previous state.
-    /// The returned Model is the final state of the Model when the program exited.
-    /// Infinite loops are possible when Update generates Effects on every iteration.
-    /// This allows the program to support interactive applications, for example.
-    let resume (program: Ump<'initArg, 'resumeArg, 'Model, 'Effect, 'Msg, 'Model>) (resumeArg: 'resumeArg) (lastModel: 'Model) =
-        match program.ResumeMsg with
-        | None ->
-            async.Return lastModel
-        | Some resumeMsg ->
-            let state =
-                {
-                    Model = lastModel
-                    Msgs = [resumeMsg resumeArg]
-                    Effects = []
-                }
-            runLoop program state
-
-
-module Result =
-
-    let bindUpdate updatef msg result =
-        match result with
-        | Ok model ->
-            updatef msg model
-        | Error err ->
-            Error err, []
+    /// Creates a test function from the init and update functions.
+    /// The returned function takes initArg and msgs and returns
+    /// a model and effect list that you can test against expected values.
+    let createTest init update =
+        let test initArg msgs =
+            let init = init initArg
+            // ignore previous effects
+            let update (model, _) msg =
+                update msg model
+            msgs
+            |> List.fold update init
+        test
 

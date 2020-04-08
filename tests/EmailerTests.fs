@@ -4,16 +4,6 @@ open System
 open Microsoft.VisualStudio.TestTools.UnitTesting
 open Ump
 
-module Test =
-    
-    let ump init update initArg msgs =
-        let init = init initArg
-        // ignore previous effects
-        let update (model, _) msg =
-            Result.bindUpdate update msg model
-        msgs
-        |> List.fold update init
-
 open Emailer
 
 [<TestClass>]
@@ -23,8 +13,7 @@ type EmailerTests () =
     let now = DateTimeOffset(2019, 1, 1, 12, 34, 56, TimeSpan.Zero)
     let nextSend = DateTimeOffset(2019, 1, 1, 12, 34, 57, TimeSpan.Zero)
 
-    let test initArg msgs =
-        Test.ump Emailer.init Emailer.update initArg msgs
+    let test = Ump.createTest Emailer.init (Result.bindUpdate Emailer.update)
     
     let settings : Emailer.Settings =
         {
@@ -75,13 +64,6 @@ type EmailerTests () =
     let toSend = [ [ email ] ]
 
     let toSend2 = [ [ email2 ] ]
-
-    let equals expected actual =
-        if expected = actual then
-            ()
-        else
-            let msg = sprintf "\r\nActual\r\n------\r\n%A\r\n\r\nExpected\r\n--------\r\n%A" expected actual
-            Assert.Fail(msg)
 
     [<TestMethod>]
     member __.``init - finds new items`` () =

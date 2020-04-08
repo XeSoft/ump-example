@@ -179,6 +179,5 @@ let ump config =
         Update = Result.bindUpdate update
         Perform = perform config
         Output = id
-        ResumeMsg = None
     }
 
