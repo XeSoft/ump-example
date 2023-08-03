@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29609.76
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.33829.164
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Emailer", "Emailer\Emailer.fsproj", "{A2AED58D-BB08-4FA1-AE7D-A037E79231F5}"
 EndProject
@@ -9,7 +9,9 @@ Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "tests", "tests\tests.fsproj
 EndProject
 Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Ump", "Ump\Ump.fsproj", "{C70D59F1-72F1-4AD5-AE2D-E7726CAD535A}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Counter", "Counter\Counter.fsproj", "{6E96BFF2-8F9D-4A3B-8116-076135FFD557}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Counter", "Counter\Counter.fsproj", "{6E96BFF2-8F9D-4A3B-8116-076135FFD557}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Ump.v2", "Ump.v2\Ump.v2.fsproj", "{220B94D8-A989-4926-965A-E04E8F0A53D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6E96BFF2-8F9D-4A3B-8116-076135FFD557}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E96BFF2-8F9D-4A3B-8116-076135FFD557}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E96BFF2-8F9D-4A3B-8116-076135FFD557}.Release|Any CPU.Build.0 = Release|Any CPU
+		{220B94D8-A989-4926-965A-E04E8F0A53D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{220B94D8-A989-4926-965A-E04E8F0A53D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{220B94D8-A989-4926-965A-E04E8F0A53D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{220B94D8-A989-4926-965A-E04E8F0A53D4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
